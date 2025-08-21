@@ -9,6 +9,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.antonioladeia.cadernetamaconica.ui.home.HomeDestination
 import com.antonioladeia.cadernetamaconica.ui.home.HomeScreen
+import com.antonioladeia.cadernetamaconica.ui.session.SessionEntryDestination
+import com.antonioladeia.cadernetamaconica.ui.session.SessionEntryScreen
 
 @Composable
 fun CadernetaNavHost(
@@ -22,18 +24,18 @@ fun CadernetaNavHost(
     ) {
         composable(route = HomeDestination.route) {
             HomeScreen(
-//                navigateToItemEntry = { navController.navigate(SessionEntryDestination.route) },
+                navigateToItemEntry = { navController.navigate(SessionEntryDestination.route) },
 //                navigateToItemUpdate = {
 //                    navController.navigate("${SessionDetailsDestination.route}/${it}")
 //                }
             )
         }
-//        composable(route = SessionEntryDestination.route) {
-//            ItemEntryScreen(
-//                navigateBack = { navController.popBackStack() },
-//                onNavigateUp = { navController.navigateUp() }
-//            )
-//        }
+        composable(route = SessionEntryDestination.route) {
+            SessionEntryScreen(
+                navigateBack = { navController.popBackStack() },
+                onNavigateUp = { navController.navigateUp() }
+            )
+        }
 //        composable(
 //            route = SessionDetailsDestination.routeWithArgs,
 //            arguments = listOf(navArgument(SessionDetailsDestination.itemIdArg) {

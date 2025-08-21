@@ -54,7 +54,7 @@ object HomeDestination : NavigationDestination {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-//    navigateToItemEntry: () -> Unit,
+    navigateToItemEntry: () -> Unit,
 //    navigateToItemUpdate: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -71,7 +71,7 @@ fun HomeScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { },
+                onClick = navigateToItemEntry,
                 shape = MaterialTheme.shapes.medium,
                 modifier = Modifier
                     .padding(
