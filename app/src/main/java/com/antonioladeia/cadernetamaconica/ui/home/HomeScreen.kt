@@ -26,6 +26,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -35,10 +37,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.antonioladeia.cadernetamaconica.CadernetaTopAppBar
 import com.antonioladeia.cadernetamaconica.R
 import com.antonioladeia.cadernetamaconica.data.SessionDataFake
 import com.antonioladeia.cadernetamaconica.data.SessionEntity
+import com.antonioladeia.cadernetamaconica.ui.AppViewModelProvider
 import com.antonioladeia.cadernetamaconica.ui.navigation.NavigationDestination
 import com.antonioladeia.cadernetamaconica.ui.theme.CadernetaMaconicaTheme
 import java.time.LocalDate
@@ -53,10 +57,13 @@ object HomeDestination : NavigationDestination {
 fun HomeScreen(
     navigateToSessionEntry: () -> Unit,
     navigateToItemUpdate: (Int) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: HomeViewModel = viewModel(factory = AppViewModelProvider.Factory)
+
 ) {
+    val homeUiState by viewModel.homeUiState.collectAsState()
+
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-    val sessions = SessionDataFake().allSessions()
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
@@ -84,7 +91,7 @@ fun HomeScreen(
         },
     ) { innerPadding ->
         HomeBody(
-            sessionList = sessions,
+            sessionList = homeUiState.sessionsList,
             onSessionClick = navigateToItemUpdate,
             modifier = modifier.fillMaxSize(),
             contentPadding = innerPadding,

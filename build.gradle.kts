@@ -6,6 +6,12 @@ buildscript {
 }
 plugins {
     alias(libs.plugins.android.application) apply false
+    id("com.android.library") version "8.12.1" apply false
     alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.kotlin.compose) apply false
+
+}
+
+tasks.register("clean", Delete::class) {
+    delete(rootProject.buildDir)
 }
