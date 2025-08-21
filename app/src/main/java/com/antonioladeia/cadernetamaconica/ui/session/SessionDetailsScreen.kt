@@ -43,7 +43,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.antonioladeia.cadernetamaconica.CadernetaTopAppBar
 import com.antonioladeia.cadernetamaconica.R
-import com.antonioladeia.cadernetamaconica.data.SessionDataFake
 import com.antonioladeia.cadernetamaconica.data.SessionEntity
 import com.antonioladeia.cadernetamaconica.ui.AppViewModelProvider
 import com.antonioladeia.cadernetamaconica.ui.navigation.NavigationDestination
@@ -79,7 +78,7 @@ fun SessionDetailsScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { navigateToEditSession(SessionDataFake().allSessions().get(0).id) },
+                onClick = { navigateToEditSession(uiState.value.sessionDetails.id) },
                 shape = MaterialTheme.shapes.medium,
                 modifier = Modifier
                     .padding(

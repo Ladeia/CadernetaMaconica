@@ -14,7 +14,7 @@ interface SessionDao {
     fun getAllSessions(): Flow<List<SessionEntity>>
 
     @Query("SELECT * from session_entity WHERE id = :id")
-    fun getSession(id: Int): Flow<SessionEntity>
+    fun getSession(id: Int): Flow<SessionEntity?>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(session: SessionEntity)
