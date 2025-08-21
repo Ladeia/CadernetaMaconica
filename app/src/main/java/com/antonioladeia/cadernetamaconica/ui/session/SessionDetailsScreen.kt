@@ -45,6 +45,7 @@ import com.antonioladeia.cadernetamaconica.CadernetaTopAppBar
 import com.antonioladeia.cadernetamaconica.R
 import com.antonioladeia.cadernetamaconica.data.SessionDataFake
 import com.antonioladeia.cadernetamaconica.data.SessionEntity
+import com.antonioladeia.cadernetamaconica.ui.AppViewModelProvider
 import com.antonioladeia.cadernetamaconica.ui.navigation.NavigationDestination
 import com.antonioladeia.cadernetamaconica.ui.theme.CadernetaMaconicaTheme
 import kotlinx.coroutines.launch
@@ -63,7 +64,10 @@ fun SessionDetailsScreen(
     navigateToEditSession: (Int) -> Unit,
     navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
+    viewModel: SessionDetailsViewModel = viewModel(factory = AppViewModelProvider.Factory)
+
 ) {
+    val uiState = viewModel.uiState.collectAsState()
     val coroutineScope = rememberCoroutineScope()
     Scaffold(
         topBar = {
@@ -92,8 +96,10 @@ fun SessionDetailsScreen(
         modifier = modifier,
     ) { innerPadding ->
         SessionDetailsBody(
+            sessionDetailsUiState = uiState.value,
             onDelete = {
                 coroutineScope.launch {
+                    viewModel.deleteItem()
                     navigateBack()
                 }
             },
@@ -110,6 +116,7 @@ fun SessionDetailsScreen(
 
 @Composable
 private fun SessionDetailsBody(
+    sessionDetailsUiState: SessionDetailsUiState,
     onDelete: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -119,7 +126,7 @@ private fun SessionDetailsBody(
     ) {
         var deleteConfirmationRequired by rememberSaveable { mutableStateOf(false) }
         SessionDetails(
-            session = SessionDataFake().allSessions().get(0), modifier = Modifier.fillMaxWidth()
+            session = sessionDetailsUiState.sessionDetails.toSession(), modifier = Modifier.fillMaxWidth()
         )
         OutlinedButton(
             onClick = { deleteConfirmationRequired = true },
@@ -268,6 +275,17 @@ private fun DeleteConfirmationDialog(
 @Composable
 fun SessionDetailsScreenPreview() {
     CadernetaMaconicaTheme {
-        SessionDetailsBody(onDelete = {})
+        SessionDetailsBody(
+            SessionDetailsUiState(
+                sessionDetails = SessionDetails(
+                    1,
+                    LocalDate.now().toString(),
+                    "sessao",
+                    "loja",
+                    "oriente",
+                    "potencia",
+                    "observacoes"
+                )
+            ), onDelete = {})
     }
 }

@@ -7,6 +7,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.antonioladeia.cadernetamaconica.CadernetaMaconicaApplication
 import com.antonioladeia.cadernetamaconica.ui.home.HomeViewModel
+import com.antonioladeia.cadernetamaconica.ui.session.SessionDetailsViewModel
 import com.antonioladeia.cadernetamaconica.ui.session.SessionEditViewModel
 import com.antonioladeia.cadernetamaconica.ui.session.SessionEntryViewModel
 
@@ -21,13 +22,13 @@ object AppViewModelProvider {
         initializer {
             SessionEntryViewModel(cadernetaApplication().container.sessionRepository)
         }
-//
-//        initializer {
-//            SessionDetailsViewModel(
-//                this.createSavedStateHandle(),
-//                cadernetaApplication().container.sessionRepository
-//            )
-//        }
+
+        initializer {
+            SessionDetailsViewModel(
+                this.createSavedStateHandle(),
+                cadernetaApplication().container.sessionRepository
+            )
+        }
 
          initializer {
             HomeViewModel(cadernetaApplication().container.sessionRepository)
