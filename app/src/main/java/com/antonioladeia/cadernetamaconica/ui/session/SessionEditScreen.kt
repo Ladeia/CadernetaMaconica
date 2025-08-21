@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.antonioladeia.cadernetamaconica.CadernetaTopAppBar
 import com.antonioladeia.cadernetamaconica.R
+import com.antonioladeia.cadernetamaconica.ui.AppViewModelProvider
 import com.antonioladeia.cadernetamaconica.ui.navigation.NavigationDestination
 import com.antonioladeia.cadernetamaconica.ui.theme.CadernetaMaconicaTheme
 import kotlinx.coroutines.launch
@@ -33,6 +34,8 @@ fun SessionEditScreen(
     navigateBack: () -> Unit,
     onNavigateUp: () -> Unit,
     modifier: Modifier = Modifier,
+    viewModel: SessionEditViewModel = viewModel(factory = AppViewModelProvider.Factory)
+
 ) {
     val coroutineScope = rememberCoroutineScope()
     Scaffold(
@@ -46,20 +49,21 @@ fun SessionEditScreen(
         modifier = modifier
     ) { innerPadding ->
         SessionEntryBody(
+            sessionUiState = viewModel.sessionUiState,
+            onItemValueChange = viewModel::updateUiState,
             onSaveClick = {
                 coroutineScope.launch {
-                    { }
+                    viewModel.updateItem()
                     navigateBack()
                 }
             },
-            onItemValueChange = {},
             modifier = Modifier
                 .padding(
                     start = innerPadding.calculateStartPadding(LocalLayoutDirection.current),
                     top = innerPadding.calculateTopPadding(),
                     end = innerPadding.calculateEndPadding(LocalLayoutDirection.current),
                 )
-                .verticalScroll(rememberScrollState()),
+                .verticalScroll(rememberScrollState())
         )
     }
 }

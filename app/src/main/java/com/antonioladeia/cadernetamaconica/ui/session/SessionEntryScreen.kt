@@ -23,7 +23,6 @@ import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -38,18 +37,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.antonioladeia.cadernetamaconica.CadernetaTopAppBar
 import com.antonioladeia.cadernetamaconica.R
-import com.antonioladeia.cadernetamaconica.data.SessionEntity
+import com.antonioladeia.cadernetamaconica.ui.AppViewModelProvider
 import com.antonioladeia.cadernetamaconica.ui.navigation.NavigationDestination
 import com.antonioladeia.cadernetamaconica.ui.theme.CadernetaMaconicaTheme
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import java.util.Currency
-import java.util.Locale
 
 object SessionEntryDestination : NavigationDestination {
     override val route = "session_entry"
@@ -62,6 +58,8 @@ fun SessionEntryScreen(
     navigateBack: () -> Unit,
     onNavigateUp: () -> Unit,
     canNavigateBack: Boolean = true,
+    viewModel: SessionEntryViewModel = viewModel(factory = AppViewModelProvider.Factory)
+
 ) {
     val coroutineScope = rememberCoroutineScope()
     Scaffold(
@@ -74,9 +72,11 @@ fun SessionEntryScreen(
         }
     ) { innerPadding ->
         SessionEntryBody(
-            onItemValueChange = {},
+            sessionUiState = viewModel.sessionUiState,
+            onItemValueChange = viewModel::updateUiState,
             onSaveClick = {
                 coroutineScope.launch {
+                    viewModel.saveItem()
                     navigateBack()
                 }
             },
@@ -92,19 +92,9 @@ fun SessionEntryScreen(
     }
 }
 
-data class SessionDetails(
-    val id: Int = 0,
-    val dataSessao: String = "",
-    val sessao: String = "",
-    val loja: String = "",
-    val oriente: String = "",
-    val potencia: String = "",
-    val rito: String = "",
-    val observacoes: String = ""
-
-)
 @Composable
 fun SessionEntryBody(
+    sessionUiState: SessionUiState,
     onItemValueChange: (SessionDetails) -> Unit,
     onSaveClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -114,13 +104,13 @@ fun SessionEntryBody(
         verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_large))
     ) {
         ItemInputForm(
-            sessionDetails = SessionDetails(),
+            sessionDetails = sessionUiState.sessionDetails,
             onValueChange = onItemValueChange,
             modifier = Modifier.fillMaxWidth()
         )
         Button(
             onClick = onSaveClick,
-            enabled = true,
+            enabled = sessionUiState.isEntryValid,
             shape = MaterialTheme.shapes.small,
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -246,6 +236,15 @@ fun ItemInputForm(
 @Composable
 private fun ItemEntryScreenPreview() {
     CadernetaMaconicaTheme {
-        SessionEntryBody(onItemValueChange = {}, onSaveClick = {})
+        SessionEntryBody(sessionUiState = SessionUiState(
+            SessionDetails(
+                sessao = "sessao",
+                loja = "loja",
+                potencia = "potencia",
+                dataSessao = LocalDate.now().toString(),
+                oriente = "oriente",
+                observacoes = "observacoes"
+            )
+        ), onItemValueChange = {}, onSaveClick = {})
     }
 }
