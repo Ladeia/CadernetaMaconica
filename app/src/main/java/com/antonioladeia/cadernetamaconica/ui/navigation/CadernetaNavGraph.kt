@@ -11,6 +11,8 @@ import com.antonioladeia.cadernetamaconica.ui.home.HomeDestination
 import com.antonioladeia.cadernetamaconica.ui.home.HomeScreen
 import com.antonioladeia.cadernetamaconica.ui.session.SessionDetailsDestination
 import com.antonioladeia.cadernetamaconica.ui.session.SessionDetailsScreen
+import com.antonioladeia.cadernetamaconica.ui.session.SessionEditDestination
+import com.antonioladeia.cadernetamaconica.ui.session.SessionEditScreen
 import com.antonioladeia.cadernetamaconica.ui.session.SessionEntryDestination
 import com.antonioladeia.cadernetamaconica.ui.session.SessionEntryScreen
 
@@ -45,21 +47,20 @@ fun CadernetaNavHost(
             })
         ) {
             SessionDetailsScreen(
-                //navigateToEditSession = { navController.navigate("${SessionEditDestination.route}/$it") },
-                navigateToEditSession = { navController.navigate("") },
+                navigateToEditSession = { navController.navigate("${SessionEditDestination.route}/$it") },
                 navigateBack = { navController.navigateUp() }
             )
         }
-//        composable(
-//            route = SessionEditDestination.routeWithArgs,
-//            arguments = listOf(navArgument(SessionEditDestination.itemIdArg) {
-//                type = NavType.IntType
-//            })
-//        ) {
-//            SessionEditScreen(
-//                navigateBack = { navController.popBackStack() },
-//                onNavigateUp = { navController.navigateUp() }
-//            )
-//        }
+        composable(
+            route = SessionEditDestination.routeWithArgs,
+            arguments = listOf(navArgument(SessionEditDestination.itemIdArg) {
+                type = NavType.IntType
+            })
+        ) {
+            SessionEditScreen(
+                navigateBack = { navController.popBackStack() },
+                onNavigateUp = { navController.navigateUp() }
+            )
+        }
     }
 }
