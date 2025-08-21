@@ -9,6 +9,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.antonioladeia.cadernetamaconica.ui.home.HomeDestination
 import com.antonioladeia.cadernetamaconica.ui.home.HomeScreen
+import com.antonioladeia.cadernetamaconica.ui.session.SessionDetailsDestination
+import com.antonioladeia.cadernetamaconica.ui.session.SessionDetailsScreen
 import com.antonioladeia.cadernetamaconica.ui.session.SessionEntryDestination
 import com.antonioladeia.cadernetamaconica.ui.session.SessionEntryScreen
 
@@ -24,10 +26,10 @@ fun CadernetaNavHost(
     ) {
         composable(route = HomeDestination.route) {
             HomeScreen(
-                navigateToItemEntry = { navController.navigate(SessionEntryDestination.route) },
-//                navigateToItemUpdate = {
-//                    navController.navigate("${SessionDetailsDestination.route}/${it}")
-//                }
+                navigateToSessionEntry = { navController.navigate(SessionEntryDestination.route) },
+                navigateToItemUpdate = {
+                    navController.navigate("${SessionDetailsDestination.route}/${it}")
+                }
             )
         }
         composable(route = SessionEntryDestination.route) {
@@ -36,17 +38,18 @@ fun CadernetaNavHost(
                 onNavigateUp = { navController.navigateUp() }
             )
         }
-//        composable(
-//            route = SessionDetailsDestination.routeWithArgs,
-//            arguments = listOf(navArgument(SessionDetailsDestination.itemIdArg) {
-//                type = NavType.IntType
-//            })
-//        ) {
-//            SessionDetailsScreen(
-//                navigateToEditSession = { navController.navigate("${SessionEditDestination.route}/$it") },
-//                navigateBack = { navController.navigateUp() }
-//            )
-//        }
+        composable(
+            route = SessionDetailsDestination.routeWithArgs,
+            arguments = listOf(navArgument(SessionDetailsDestination.itemIdArg) {
+                type = NavType.IntType
+            })
+        ) {
+            SessionDetailsScreen(
+                //navigateToEditSession = { navController.navigate("${SessionEditDestination.route}/$it") },
+                navigateToEditSession = { navController.navigate("") },
+                navigateBack = { navController.navigateUp() }
+            )
+        }
 //        composable(
 //            route = SessionEditDestination.routeWithArgs,
 //            arguments = listOf(navArgument(SessionEditDestination.itemIdArg) {

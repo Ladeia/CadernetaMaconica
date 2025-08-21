@@ -26,8 +26,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -37,7 +35,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.antonioladeia.cadernetamaconica.CadernetaTopAppBar
 import com.antonioladeia.cadernetamaconica.R
 import com.antonioladeia.cadernetamaconica.data.SessionDataFake
@@ -54,8 +51,8 @@ object HomeDestination : NavigationDestination {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    navigateToItemEntry: () -> Unit,
-//    navigateToItemUpdate: (Int) -> Unit,
+    navigateToSessionEntry: () -> Unit,
+    navigateToItemUpdate: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
@@ -71,7 +68,7 @@ fun HomeScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = navigateToItemEntry,
+                onClick = navigateToSessionEntry,
                 shape = MaterialTheme.shapes.medium,
                 modifier = Modifier
                     .padding(
@@ -88,7 +85,7 @@ fun HomeScreen(
     ) { innerPadding ->
         HomeBody(
             sessionList = sessions,
-            //onSessionClick = doNothing(),
+            onSessionClick = navigateToItemUpdate,
             modifier = modifier.fillMaxSize(),
             contentPadding = innerPadding,
         )
@@ -98,7 +95,7 @@ fun HomeScreen(
 @Composable
 private fun HomeBody(
     sessionList: List<SessionEntity>,
-    //onSessionClick: (Int) -> Unit,
+    onSessionClick: (Int) -> Unit,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
 ) {
@@ -116,7 +113,7 @@ private fun HomeBody(
         } else {
             SessionList(
                 itemList = sessionList,
-                onItemClick = { doNothing() },
+                onItemClick = { onSessionClick(it.id) },
                 contentPadding = contentPadding,
                 modifier = Modifier.padding(horizontal = dimensionResource(id = R.dimen.padding_small))
             )
@@ -176,7 +173,7 @@ private fun SessionItem(
 fun HomeBodyPreview() {
     val sessions = SessionDataFake().allSessions()
     CadernetaMaconicaTheme {
-        HomeBody(sessions)
+        HomeBody(sessions, onSessionClick = {})
     }
 }
 
@@ -184,7 +181,7 @@ fun HomeBodyPreview() {
 @Composable
 fun HomeBodyEmptyListPreview() {
     CadernetaMaconicaTheme {
-        HomeBody(listOf())
+        HomeBody(listOf(), onSessionClick = {})
     }
 }
 
@@ -196,8 +193,4 @@ fun SessionItemPreview() {
             SessionEntity(1, LocalDate.of(2025, 7, 30).toString(), "Sessão 01", "loja", "oriente", "potência", "rito", "observacoes"),
         )
     }
-}
-
-fun doNothing(){
-
 }
