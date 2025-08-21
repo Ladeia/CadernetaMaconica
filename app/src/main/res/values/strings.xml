@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">Caderneta Maçônica</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="nome">Nome:</string>
+    <string name="loja">Loja:</string>
+    <string name="cim">CIM:</string>
+    <string name="potencia">Potência:</string>
+    <string name="iniciacao">Iniciação:</string>
+    <string name="elevacao">Elevação:</string>
+    <string name="exaltacao">Exaltação:</string>
+    <string name="save">Salvar</string>
+    <string name="rito">Rito:</string>
+    <string name="session_entry_title">Adicionar Sessão</string>
+    <string name="no_session_description">Oops!\nNão existem sessões registradas ainda.\nClique no + para adicionar.</string>
+
+    <string name="back_button">Back</string>
+    <string name="item">Item</string>
+    <string name="item_detail_title">Item Details</string>
+    <string name="item_entry_title">Add Item</string>
+    <string name="item_name_req">Item Name*</string>
+    <string name="item_price_req">Item Price*</string>
+    <string name="no">No</string>
+    <string name="price">Price</string>
+    <string name="quantity_in_stock">Quantity in stock</string>
+    <string name="in_stock">%d in stock</string>
+    <string name="quantity_req">Quantity in Stock*</string>
+    <string name="save_action">Salvar</string>
+    <string name="sell">Sell</string>
+    <string name="yes">Yes</string>
+    <string name="required_fields">*campos necessários</string>
+    <string name="attention">Atenção</string>
+    <string name="delete_session">Apagar sessão</string>
+    <string name="delete">Apagar</string>
+    <string name="edit_session_title">Editar sessão</string>
+    <string name="data_sessao">Data da sessão</string>
+    <string name="session">Sessão</string>
+    <string name="oriente">Oriente</string>
+    <string name="observacoes">Observações</string>
+</resources>
