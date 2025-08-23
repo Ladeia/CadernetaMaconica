@@ -18,7 +18,7 @@ abstract class CadernetaDatabase : RoomDatabase() {
         fun getDatabase(context: Context): CadernetaDatabase {
             return Instance ?: synchronized(this) {
                 Room.databaseBuilder(context, CadernetaDatabase::class.java, "caderneta_database")
-                    .fallbackToDestructiveMigration()
+                    .fallbackToDestructiveMigration(false)
                     .build()
                     .also { Instance = it }
             }

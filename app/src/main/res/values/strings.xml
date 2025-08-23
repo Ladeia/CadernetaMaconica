@@ -12,7 +12,7 @@
     <string name="save">Salvar</string>
     <string name="rito">Rito:</string>
     <string name="session_entry_title">Adicionar Sessão</string>
-    <string name="no_session_description">Oops!\nNão existem sessões registradas ainda.\nClique no + para adicionar.</string>
+    <string name="no_session_description">Não existem sessões ainda.\nClique no + para adicionar.</string>
 
     <string name="back_button">Back</string>
     <string name="item">Item</string>
