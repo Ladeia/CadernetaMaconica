@@ -38,4 +38,5 @@
     <string name="oriente">Oriente</string>
     <string name="observacoes">Observações</string>
     <string name="session_detail_title">Detalhes da sessão</string>
+    <string name="grau">Grau</string>
 </resources>

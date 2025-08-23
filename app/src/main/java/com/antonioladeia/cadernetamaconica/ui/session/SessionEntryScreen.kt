@@ -170,6 +170,19 @@ fun ItemInputForm(
             singleLine = true
         )
         OutlinedTextField(
+            value = sessionDetails.grau,
+            onValueChange = { onValueChange(sessionDetails.copy(grau = it)) },
+            label = { Text(stringResource(R.string.grau)) },
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                unfocusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                disabledContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+            ),
+            modifier = Modifier.fillMaxWidth(),
+            enabled = enabled,
+            singleLine = true
+        )
+        OutlinedTextField(
             value = sessionDetails.oriente,
             onValueChange = { onValueChange(sessionDetails.copy(oriente = it)) },
             label = { Text(stringResource(R.string.oriente)) },

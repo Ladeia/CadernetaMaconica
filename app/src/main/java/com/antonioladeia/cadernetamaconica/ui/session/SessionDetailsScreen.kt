@@ -185,6 +185,16 @@ fun SessionDetails(
                 )
             )
             SessionDetailsRow(
+                labelResID = R.string.grau,
+                itemDetail = session.grau,
+                modifier = Modifier.padding(
+                    horizontal = dimensionResource(
+                        id = R.dimen
+                            .padding_medium
+                    )
+                )
+            )
+            SessionDetailsRow(
                 labelResID = R.string.loja,
                 itemDetail = session.loja,
                 modifier = Modifier.padding(

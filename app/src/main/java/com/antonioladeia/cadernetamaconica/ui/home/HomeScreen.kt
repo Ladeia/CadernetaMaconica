@@ -168,6 +168,10 @@ private fun SessionItem(
                 )
             }
             Text(
+                text = item.grau,
+                style = MaterialTheme.typography.titleMedium,
+            )
+            Text(
                 text = item.dataSessao,
                 style = MaterialTheme.typography.titleMedium
             )
